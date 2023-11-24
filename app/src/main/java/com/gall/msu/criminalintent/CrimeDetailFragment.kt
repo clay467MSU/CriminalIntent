@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,6 +17,8 @@ import com.gall.msu.criminalintent.databinding.FragmentCrimeDetailBinding
 import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.UUID
+import androidx.activity.OnBackPressedCallback
+
 
 private const val TAG = "CrimeDetailFragment"
 
@@ -65,6 +68,23 @@ class CrimeDetailFragment : Fragment() {
                     oldCrime.copy(title = text.toString())
                 }
             }
+
+            val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (binding.crimeTitle.text.isEmpty()) {
+                        binding.root.setOnClickListener {
+                            Toast.makeText(
+                                binding.root.context,
+                                "Please provide a description of the crime.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } else {
+
+                    }
+                }
+            })
+
 
             crimeDate.apply {
                 isEnabled = false
