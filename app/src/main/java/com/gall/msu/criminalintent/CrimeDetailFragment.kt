@@ -72,18 +72,20 @@ class CrimeDetailFragment : Fragment() {
             val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (binding.crimeTitle.text.isEmpty()) {
-                        binding.root.setOnClickListener {
-                            Toast.makeText(
-                                binding.root.context,
-                                "Please provide a description of the crime.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                        Toast.makeText(
+                            binding.root.context,
+                            "Please provide a description of the crime.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     } else {
-
+                        // If the crime title is not empty, allow the back button to work as usual
+                        isEnabled = false
+                        remove()
+                        requireActivity().onBackPressed()
                     }
                 }
             })
+
 
 
             crimeDate.apply {
